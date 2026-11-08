@@ -28,8 +28,8 @@ def _client() -> OpenAI:
 
 def _pdf_to_text(raw: bytes) -> str:
     with fitz.open(stream=raw, filetype="pdf") as document:
-        pages = [f"[Page {i}]\\n{page.get_text('text').strip()}" for i, page in enumerate(document, 1) if page.get_text("text").strip()]
-    extracted = "\\n\\n".join(pages).strip()
+        pages = [f"[Page {i}]\n{page.get_text('text').strip()}" for i, page in enumerate(document, 1) if page.get_text("text").strip()]
+    extracted = "\n\n".join(pages).strip()
     if not extracted:
         raise ValueError("No selectable text found. Scanned PDF OCR is not supported yet; upload a clear page image.")
     return extracted[:40000]
@@ -50,7 +50,7 @@ def _image_data_url(raw: bytes) -> str:
 
 def extract_invoice(raw: bytes, content_type: str) -> InvoiceExtraction:
     if content_type == "application/pdf":
-        content = [{"type": "input_text", "text": "Extract invoice details from this PDF text:\\n\\n" + _pdf_to_text(raw)}]
+        content = [{"type": "input_text", "text": "Extract invoice details from this PDF text:\n\n" + _pdf_to_text(raw)}]
     else:
         content = [
             {"type": "input_text", "text": "Extract invoice information from this image."},
