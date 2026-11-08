@@ -1,0 +1,18 @@
+Project: ProofPocket
+Category: Work & automation
+
+Description:
+AI-powered personal ownership intelligence platform. ProofPocket transforms invoices, receipts and warranty documents into structured, searchable ownership records.
+
+BharatCode Integration:
+Model configured: qwen-3.8-27b
+Use cases:
+1. Invoice and receipt extraction
+2. Purchase document classification
+3. Warranty information extraction when explicitly present
+4. Evidence-grounded ownership intelligence
+
+API base URL:
+https://bharatcode.ai/api/model/v1
+
+All inference requests are server-side. API credentials are not exposed to the browser.
