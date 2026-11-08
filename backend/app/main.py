@@ -1,9 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+from app.api.routes.auth import router as auth_router
 from app.api.routes.documents import router as documents_router
 from app.core.config import settings
 
-app = FastAPI(title=settings.app_name, version="0.1.0", description="ProofPocket ownership intelligence API")
+app = FastAPI(
+    title=settings.app_name,
+    version="0.1.0",
+    description="ProofPocket ownership intelligence API",
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[settings.frontend_url],
@@ -11,6 +17,7 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PATCH", "DELETE"],
     allow_headers=["Authorization", "Content-Type"],
 )
+app.include_router(auth_router)
 app.include_router(documents_router)
 
 
@@ -25,5 +32,5 @@ async def health():
         "status": "healthy",
         "environment": settings.environment,
         "bharatcode_configured": bool(settings.bharatcode_api_key),
-        "supabase_configured": bool(settings.supabase_url and settings.supabase_service_role_key),
+        "supabase_auth_configured": bool(settings.supabase_url and settings.supabase_anon_key),
     }
